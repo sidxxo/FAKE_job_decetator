@@ -1,0 +1,642 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fake Job Detector | AI Intelligence</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --black: #111111;
+    --gray: #86868b;
+    --blue: #0071e3;
+    --background: #f5f5f7;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--background);
+    color: var(--black);
+}
+
+/* NAVBAR */
+
+nav {
+    height: 60px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.logo {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.nav-right {
+    font-size: 13px;
+    color: var(--gray);
+}
+
+/* HERO */
+
+.hero {
+    text-align: center;
+    padding: 105px 20px 85px;
+    background:
+        radial-gradient(ellipse at 50% 100%, #dbeafe 0%, transparent 60%),
+        linear-gradient(180deg, #ffffff, #f5f5f7);
+}
+
+.tag {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #e8f2ff;
+    color: var(--blue);
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 7vw, 76px);
+    font-weight: 800;
+    letter-spacing: -4px;
+    line-height: 1.05;
+    max-width: 850px;
+    margin: auto;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #0071e3, #7b61ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    color: var(--gray);
+    font-size: 18px;
+    line-height: 1.7;
+    max-width: 570px;
+    margin: 25px auto 30px;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background: var(--blue);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.hero-btn:hover {
+    background: #005bb5;
+    transform: translateY(-2px);
+}
+
+/* MAIN FORM */
+
+.main {
+    max-width: 850px;
+    margin: auto;
+    padding: 35px 20px 90px;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-heading h2 {
+    font-size: 36px;
+    letter-spacing: -1.5px;
+    margin-bottom: 10px;
+}
+
+.section-heading p {
+    color: var(--gray);
+    font-size: 14px;
+}
+
+.form-card {
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #d2d2d7;
+    border-radius: 12px;
+    background: #fbfbfd;
+    font-family: inherit;
+    font-size: 14px;
+    color: #1d1d1f;
+    outline: none;
+    transition: 0.25s;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+    background: white;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #a1a1a6;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+}
+
+.form-divider {
+    border: none;
+    border-top: 1px solid #eeeeef;
+    margin: 30px 0;
+}
+
+.form-subheading {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 22px;
+    letter-spacing: -0.5px;
+}
+
+/* BUTTON */
+
+.submit-btn {
+    width: 100%;
+    padding: 17px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background: #005bb5;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,113,227,0.2);
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+    transform: none;
+}
+
+/* RESULT */
+
+#result {
+    display: none;
+    margin-top: 25px;
+    padding: 30px;
+    border-radius: 18px;
+    text-align: center;
+    animation: appear 0.4s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.genuine {
+    background: #e8f8ed;
+    color: #176b37;
+}
+
+.fraud {
+    background: #fff0f0;
+    color: #b42318;
+}
+
+.error {
+    background: #fff7df;
+    color: #946200;
+}
+
+#result h2 {
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+#result p {
+    font-size: 15px;
+    margin-top: 8px;
+}
+
+.result-note {
+    font-size: 12px !important;
+    opacity: 0.8;
+    line-height: 1.6;
+}
+
+.probability {
+    font-size: 38px !important;
+    font-weight: 800;
+    margin: 12px 0;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 35px 20px;
+    color: var(--gray);
+    background: #eeeeef;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+footer strong {
+    color: #333;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 600px) {
+
+    nav {
+        padding: 0 5%;
+    }
+
+    .hero {
+        padding: 75px 20px;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .section-heading h2 {
+        font-size: 28px;
+    }
+
+    .form-card {
+        padding: 24px 18px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+    <div class="logo">JobIntel.</div>
+    <div class="nav-right">AI-Powered Intelligence</div>
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="tag">✦ Artificial Intelligence Powered</div>
+
+    <h1>
+        Not every job is
+        <span class="gradient-text">what it seems.</span>
+    </h1>
+
+    <p>
+        Make smarter career decisions.
+        Analyze job listings with AI and identify
+        potentially fraudulent opportunities.
+    </p>
+
+    <a href="#detector" class="hero-btn">
+        Try Job Detector →
+    </a>
+
+</section>
+
+
+<!-- FORM -->
+
+<main class="main" id="detector">
+
+    <div class="section-heading">
+        <h2>Analyze a job.</h2>
+        <p>Enter the job information below to begin your analysis.</p>
+    </div>
+
+    <div class="form-card">
+
+        <form id="jobForm">
+
+            <div class="form-group">
+                <label>Job Title *</label>
+                <input type="text" id="title" required
+                placeholder="e.g. Python Developer">
+            </div>
+
+            <div class="form-group">
+                <label>Company Profile</label>
+                <textarea id="company_profile"
+                placeholder="Tell us about the company..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Job Description</label>
+                <textarea id="description"
+                placeholder="What does this job involve?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Requirements</label>
+                <textarea id="requirements"
+                placeholder="What qualifications are required?"></textarea>
+            </div>
+
+            <hr class="form-divider">
+
+            <h3 class="form-subheading">Job Information</h3>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Employment Type</label>
+                    <select id="employment_type">
+                        <option value="unknown">Unknown</option>
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                        <option value="Contract">Contract</option>
+                        <option value="Temporary">Temporary</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Required Experience</label>
+                    <select id="required_experience">
+                        <option value="unknown">Unknown</option>
+                        <option value="Internship">Internship</option>
+                        <option value="Entry level">Entry level</option>
+                        <option value="Associate">Associate</option>
+                        <option value="Mid-Senior level">Mid-Senior level</option>
+                        <option value="Director">Director</option>
+                        <option value="Executive">Executive</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Required Education</label>
+                    <select id="required_education">
+                        <option value="unknown">Unknown</option>
+                        <option value="High School or equivalent">High School</option>
+                        <option value="Bachelor's Degree">Bachelor's Degree</option>
+                        <option value="Master's Degree">Master's Degree</option>
+                        <option value="Unspecified">Unspecified</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <hr class="form-divider">
+
+            <h3 class="form-subheading">Additional Information</h3>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Telecommuting</label>
+                    <select id="telecommuting">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Company Logo Available?</label>
+                    <select id="has_company_logo">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Screening Questions?</label>
+                    <select id="has_questions">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button type="submit" class="submit-btn" id="predictBtn">
+                Analyze Job Listing →
+            </button>
+
+        </form>
+
+        <div id="result"></div>
+
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+    <strong>JobIntel.</strong> — AI-Powered Fake Job Detection
+    <br>
+    Built with Machine Learning and FastAPI.
+    <br>
+    <br>
+    Predictions are estimates, not proof of fraud or authenticity.
+    Always independently verify employers.
+</footer>
+
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+document.getElementById("jobForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const button = document.getElementById("predictBtn");
+    const result = document.getElementById("result");
+
+    const jobData = {
+
+        title: document.getElementById("title").value,
+        company_profile: document.getElementById("company_profile").value,
+        description: document.getElementById("description").value,
+        requirements: document.getElementById("requirements").value,
+
+        employment_type: document.getElementById("employment_type").value,
+        required_experience: document.getElementById("required_experience").value,
+        required_education: document.getElementById("required_education").value,
+
+        telecommuting: Number(document.getElementById("telecommuting").value),
+        has_company_logo: Number(document.getElementById("has_company_logo").value),
+        has_questions: Number(document.getElementById("has_questions").value)
+    };
+
+    button.disabled = true;
+    button.innerText = "Analyzing...";
+
+    result.style.display = "block";
+    result.className = "";
+    result.innerText = "AI is analyzing the job information...";
+
+    try {
+
+        const response = await fetch("/predict", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(jobData)
+
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.detail
+                ? JSON.stringify(data.detail)
+                : "Prediction failed"
+            );
+        }
+
+        if (
+            typeof data.probability !== "number" ||
+            ![0, 1].includes(data.fraudulent)
+        ) {
+            throw new Error("Invalid response from prediction API");
+        }
+
+        const probability = (data.probability * 100).toFixed(2);
+
+        if (data.fraudulent === 1) {
+
+            result.className = "fraud";
+
+            result.innerHTML = `
+                <h2>⚠️ Potentially Fraudulent</h2>
+                <p>Fraud Probability</p>
+                <p class="probability">${probability}%</p>
+                <p class="result-note">
+                    This listing has been flagged by the model.
+                    Verify the employer before proceeding.
+                </p>
+            `;
+
+        } else {
+
+            result.className = "genuine";
+
+            result.innerHTML = `
+                <h2>✓ Potentially Genuine</h2>
+                <p>Fraud Probability</p>
+                <p class="probability">${probability}%</p>
+                <p class="result-note">
+                    The model did not flag this listing as fraudulent.
+                    This does not guarantee authenticity.
+                </p>
+            `;
+
+        }
+
+    } catch (error) {
+
+        result.className = "error";
+
+        result.innerText = "Error: " + error.message;
+
+    } finally {
+
+        button.disabled = false;
+        button.innerText = "Analyze Job Listing →";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+.venv
+__pyscache__
+*.pyc
+*.ipynb
+.gitignore
